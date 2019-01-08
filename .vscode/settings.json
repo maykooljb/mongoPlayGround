@@ -1,0 +1,9 @@
+{
+    "mongoRunner": {
+        "connection": {
+            "url": "mongodb://tester:tester123@localhost:27017/playGround",
+            "activeOnStartUp": true
+        }
+        
+    }
+}

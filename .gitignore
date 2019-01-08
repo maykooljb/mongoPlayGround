@@ -1,3 +1,8 @@
 bin/
 obj/
 data/db/diagnostic.data/metrics.interim
+data/db/WiredTiger.turtle
+data/db/WiredTiger.wt
+data/db/sizeStorer.wt
+data/db/diagnostic.data/metrics.interim
+data/db/journal/WiredTigerLog.0000000010

@@ -7,8 +7,9 @@ using mongoConsole.Repositories.Interfaces;
 namespace mongoConsole.Repositories
 {
     public abstract class BaseRepository<T>: IBaseRepository<T> where T : BaseMongoModel {
+        
         private readonly IMongoCollection<T> _collection;
-
+        
         public BaseRepository(IConfiguration config, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(config["dbName"]);
@@ -20,8 +21,12 @@ namespace mongoConsole.Repositories
             return _collection.Find<T>(r => r.Id == oId).FirstOrDefault();
         }
 
-        public IFindFluent<T, T> Query() {
-            return _collection.Find(r => true);
+        public IFindFluent<T, T> Query(FilterDefinition<T> filter = null) {
+            if(filter == null) {
+                return _collection.Find(r => true);
+            } else {
+                return _collection.Find(filter);                
+            }
         }
 
         public T Create(T record) {
@@ -29,9 +34,8 @@ namespace mongoConsole.Repositories
             return record;
         }
 
-        public void Replace(string id, T record) {
-            var docId = new ObjectId(id);
-            _collection.ReplaceOne(r => record.Id == docId, record);            
+        public void Replace(T record) {
+            _collection.ReplaceOne(r => r.Id == record.Id, record);            
         }
 
         public void Remove(T record)

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using mongoConsole.Models;
 
-namespace mongoConsole.Services.Repositories
+namespace mongoConsole.Services.Interfaces
 {
     public interface IUserService
     {

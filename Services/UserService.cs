@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using mongoConsole.Models;
 using mongoConsole.Repositories.Interfaces;
 using MongoDB.Driver;
-using mongoConsole.Services.Repositories;
+using mongoConsole.Services.Interfaces;
 
 namespace mongoConsole.Services
 {
@@ -16,6 +17,10 @@ namespace mongoConsole.Services
 
         public void AddUser(string userName, string firstName, string lastName)
         {
+            if(userName == null) throw new ArgumentNullException(nameof(userName));
+            if(firstName == null) throw new ArgumentNullException(nameof(firstName));
+            if(lastName == null) throw new ArgumentNullException(nameof(lastName));
+            
             var user = new Users{
                 UserName = userName,
                 Name = new NameModel {
@@ -32,6 +37,8 @@ namespace mongoConsole.Services
 
         public void RemoveUser(string userName)
         {
+            if(userName == null) throw new ArgumentNullException(nameof(userName));
+                        
             var filter = Builders<Users>.Filter.Eq("UserName", userName);
             var user = _userRepository.Query(filter).FirstOrDefault();
 
@@ -42,6 +49,9 @@ namespace mongoConsole.Services
 
         public void UpdateUser(string userName, string newUserName)
         {
+            if(userName == null) throw new ArgumentNullException(nameof(userName));
+            if(newUserName == null) throw new ArgumentNullException(nameof(newUserName));
+            
             var filter = Builders<Users>.Filter.Eq("UserName", userName);
             var user = _userRepository.Query(filter).FirstOrDefault();
 
